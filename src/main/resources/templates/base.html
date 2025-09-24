@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<!-- Defines a Thymeleaf fragment named 'parent' with parameters content, title, and script -->
+<html lang="en" th:fragment="parent(content,title,script)" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <script>
+    (function () {
+      if (localStorage.getItem("theme") === "dark") {
+        document.documentElement.classList.add("dark");
+      }
+    })();
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title th:replace="${title}">NexaConnect</title>
+  <!-- th:replace will show proper titel page -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+      <!-- Google Fonts Michroma -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet">
+
+    <!-- Tailwind or your own CSS can go here -->
+    <style>
+        .michroma-regular {
+            font-family: "Michroma", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+    </style>
+
+  <!-- Flowbite CSS for ready-to-use UI components -->
+
+  <link rel="stylesheet" th:href="@{/css/output.css}" />
+  <link rel="stylesheet" th:href="@{/css/style.css}" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- Font Awesome for icons -->
+</head>
+
+<body>
+  <!-- Child pages will insert their content here -->
+
+  <!-- If user is logged in -->
+  <div th:if="${loggedInUser}" >
+    <div th:replace="~{User/user_navbar :: user-navbar}"></div>
+  </div>
+
+  <!-- If user is NOT logged in -->
+  <div th:unless="${loggedInUser}">
+    <div th:replace="~{navbar :: navbar}"></div>
+  </div>
+
+  <div class="p-4 pt-20 pb-24 sm:pb-20">
+    <!-- Child page content dynamically inserted here -->
+    <section data-th-replace="${content}"></section>
+  </div>
+  
+
+
+  
+
+  <!-- Flowbite -->
+  <script src="https://unpkg.com/flowbite@1.6.5/dist/flowbite.min.js"></script>
+  <!-- <script th:src="@{/js/flowbite.min.js}"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script th:src="@{/javascript/script.js}"></script>
+  <th:block data-th-replace="${script}"></th:block>
+</body>
+
+</html>

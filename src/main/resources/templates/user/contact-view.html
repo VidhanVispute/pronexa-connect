@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{base :: parent(~{::#content}, ~{::title}, ~{})}">
+
+<head>
+    <title>Contact Details - [[${contact.name}]]</title>
+</head>
+
+<body>
+    <div id="content" class="flex flex-col p-6 bg-gray-50 sm:ml-64">
+
+        <!-- Sidebar -->
+        <div th:replace="~{User/sidebar :: sidebar}"></div>
+
+        <!-- Header -->
+        <div class="mb-6 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <i class="fa-solid fa-arrow-left text-xl text-gray-600"></i>
+                <h1 class="text-2xl font-bold text-gray-700">Contact Details</h1>
+            </div>
+            <a th:href="@{/user/contacts}" class="px-4 py-2 bg-gray-200 rounded-full hover:bg-gray-300">Back to
+                Contacts</a>
+        </div>
+
+        <!-- Top Section: Image + Name + Favorite -->
+        <div class="bg-white shadow rounded-xl p-6 flex flex-col md:flex-row items-center gap-6 mb-6">
+            <img th:src="${contact.picture != null && contact.picture != '' ? contact.picture : '/css/default-user.jpeg'}"
+                alt="Contact Image" class="w-32 h-32 rounded-full border-2 border-gray-300 object-cover" />
+            <div class="flex-1 flex flex-col gap-2">
+                <div class="flex items-center gap-3">
+                    <h2 style="font-family: 'Michroma', sans-serif; font-weight: 400; font-style: normal; text-transform: capitalize;"
+                        class="text-3xl text-green-700" th:text="${contact.name}">Name</h2>
+                    <i th:classappend="${contact.favorite} ? 'fa-solid fa-star text-yellow-500' : 'fa-solid fa-star text-gray-300'"
+                        class="text-xl"></i>
+                </div>
+                <p class="text-gray-600 flex items-center gap-2">
+                    <i class="fa-solid fa-envelope"></i>
+                    <span th:text="${contact.email}">email@example.com</span>
+                </p>
+                <p class="text-gray-600 flex items-center gap-2">
+                    <i class="fa-solid fa-phone"></i>
+                    <span>+91 <span th:text="${contact.phoneNumber}">9876543210</span></span>
+                </p>
+            </div>
+        </div>
+
+        <!-- Grid Section: Other Info -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3">
+
+            <!-- Address -->
+            <div class="bg-white shadow rounded-lg p-4 flex items-start gap-3">
+                <i class="fa-solid fa-map-pin text-gray-500 text-xl mt-1"></i>
+                <div>
+                    <h3 class="font-semibold text-gray-700">Address</h3>
+                    <p class="text-gray-600" th:text="${contact.address}">Address here</p>
+                </div>
+            </div>
+
+            <!-- Description -->
+            <div class="bg-white shadow rounded-lg p-4 flex items-start gap-3">
+                <i class="fa-solid fa-file-lines text-gray-500 text-xl mt-1"></i>
+                <div>
+                    <h3 class="font-semibold text-gray-700">Description</h3>
+                    <p class="text-gray-600" th:text="${contact.description}">Description here</p>
+                </div>
+            </div>
+
+            <!-- Website -->
+            <div class="bg-white shadow rounded-lg p-4 flex items-start gap-2" th:if="${contact.websiteLink != null}">
+                <i class="fa-solid fa-earth-asia text-gray-500 text-xl mt-1"></i>
+                <div>
+                    <h3 class="font-semibold text-gray-700">Website</h3>
+                    <a th:href="${contact.websiteLink}" target="_blank"
+                        class="text-blue-600 hover:underline break-words"
+                        th:text="${contact.websiteLink}">website.com</a>
+                </div>
+            </div>
+
+            <!-- LinkedIn -->
+            <div class="bg-white shadow rounded-lg p-4 flex items-start gap-3" th:if="${contact.linkedInLink != null}">
+                <i class="fa-brands fa-linkedin-in text-gray-600 text-xl mt-1"></i>
+                <div>
+                    <h3 class="font-semibold text-gray-700">LinkedIn</h3>
+                    <a th:href="${contact.linkedInLink}" target="_blank" class="text-blue-600 hover:underline"
+                        th:text="${contact.linkedInLink}">linkedin.com/in/user</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>

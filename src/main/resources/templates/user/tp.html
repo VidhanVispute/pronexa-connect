@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{base :: parent(~{::#content},~{::title},~{})}">
+<head>
+    <title>Profile</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'bounce-gentle': 'bounceGentle 2s infinite',
+                        'glow': 'glow 2s ease-in-out infinite alternate'
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        },
+                        bounceGentle: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-5px)' }
+                        },
+                        glow: {
+                            '0%': { boxShadow: '0 0 5px rgba(59, 130, 246, 0.5)' },
+                            '100%': { boxShadow: '0 0 20px rgba(59, 130, 246, 0.8)' }
+                        }
+                    },
+                    backgroundImage: {
+                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-effect {
+            backdrop-filter: blur(16px);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .dark .glass-effect {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .profile-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .dark .profile-gradient {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        }
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .dark .card-hover:hover {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
+        }
+        .theme-transition {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+    </style>
+</head>
+
+<body class="theme-transition bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 dark:from-gray-900 dark:via-blue-900 dark:to-purple-900 min-h-screen">
+
+ <div id="content"  class="ml-64 flex items-center justify-center">
+
+     <div th:replace="~{User/sidebar :: sidebar}"></div>
+    
+    <!-- Animated Background Elements -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none">
+        <div class="absolute -top-40 -right-40 w-80 h-80 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 dark:opacity-30 animate-bounce-gentle"></div>
+        <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 dark:opacity-30 animate-bounce-gentle" style="animation-delay: 2s;"></div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="relative z-10 flex-1 max-w-6xl mx-auto w-full">
+
+        <!-- Header with Animation -->
+        <div class="flex items-center justify-between mb-8 animate-fade-in">
+            <h1 class="text-4xl lg:text-5xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 dark:from-blue-400 dark:via-purple-400 dark:to-pink-400 bg-clip-text text-transparent flex items-center gap-4">
+                <i class="fa-solid fa-user-circle text-blue-600 dark:text-blue-400 animate-glow"></i> 
+                Profile
+            </h1>
+            <div class="text-sm text-gray-500 dark:text-gray-400">
+                <i class="fas fa-clock mr-2"></i>
+                Last updated: <span id="current-time"></span>
+            </div>
+        </div>
+
+        <!-- Profile Card with Glass Effect -->
+        <div class="glass-effect rounded-2xl p-8 flex flex-col lg:flex-row gap-8 items-center mb-8 card-hover animate-slide-up border shadow-xl">
+            
+            <!-- Profile Image with Glow Effect -->
+            <div class="relative">
+                <div class="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full animate-pulse"></div>
+                <img src="/css/default-user.jpeg"
+                     alt="Profile Image"
+                     class="relative w-40 h-40 rounded-full border-4 border-white dark:border-gray-700 object-cover shadow-2xl transform hover:scale-105 transition-transform duration-300"/>
+                <div class="absolute -bottom-2 -right-2 bg-green-500 w-8 h-8 rounded-full border-4 border-white dark:border-gray-700 flex items-center justify-center">
+                    <i class="fas fa-check text-white text-xs"></i>
+                </div>
+            </div>
+
+            <!-- Basic Info with Enhanced Design -->
+            <div class="flex-1 flex flex-col gap-4 text-center lg:text-left">
+                <h2 class="text-3xl lg:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-blue-600 dark:from-green-400 dark:to-blue-400">
+                    JOHN DOE
+                </h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700 dark:text-gray-300">
+                    <div class="flex items-center gap-3 p-3 rounded-lg bg-white/50 dark:bg-gray-800/50 hover:bg-white/70 dark:hover:bg-gray-800/70 transition-colors">
+                        <i class="fa-solid fa-envelope text-blue-500 text-lg"></i>
+                        <span class="font-medium">john.doe@example.com</span>
+                    </div>
+
+                    <div class="flex items-center gap-3 p-3 rounded-lg bg-white/50 dark:bg-gray-800/50 hover:bg-white/70 dark:hover:bg-gray-800/70 transition-colors">
+                        <i class="fa-solid fa-phone text-green-500 text-lg"></i>
+                        <span class="font-medium">+91 9876543210</span>
+                    </div>
+
+                    <div class="flex items-center gap-3 p-3 rounded-lg bg-white/50 dark:bg-gray-800/50 hover:bg-white/70 dark:hover:bg-gray-800/70 transition-colors md:col-span-2">
+                        <i class="fa-solid fa-info-circle text-purple-500 text-lg"></i>
+                        <span class="font-medium">Software Developer passionate about creating amazing user experiences</span>
+                    </div>
+
+                    <div class="flex items-center gap-3 p-3 rounded-lg bg-white/50 dark:bg-gray-800/50 hover:bg-white/70 dark:hover:bg-gray-800/70 transition-colors">
+                        <i class="fa-solid fa-globe text-orange-500 text-lg"></i>
+                        <span class="font-medium">SELF</span>
+                    </div>
+                </div>
+
+                <!-- Enhanced Action Buttons -->
+                <div class="flex flex-col sm:flex-row gap-4 mt-6">
+                    <a href="/user/profile/edit" 
+                       class="px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white rounded-full font-semibold flex items-center justify-center gap-2 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
+                        <i class="fa-solid fa-edit"></i> Edit Profile
+                    </a>
+                    <a href="/user/profile/change-password" 
+                       class="px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white rounded-full font-semibold flex items-center justify-center gap-2 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
+                        <i class="fa-solid fa-key"></i> Change Password
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enhanced Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 animate-slide-up" style="animation-delay: 0.2s;">
+
+            <div class="glass-effect rounded-xl p-6 card-hover border shadow-lg">
+                <div class="flex items-center gap-4">
+                    <div class="p-4 bg-gradient-to-br from-green-500 to-green-600 rounded-full text-white shadow-lg">
+                        <i class="fa-solid fa-users text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-lg text-gray-800 dark:text-gray-200">Total Contacts</h3>
+                        <p class="text-3xl font-bold text-green-600 dark:text-green-400">150</p>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">+12 this month</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-effect rounded-xl p-6 card-hover border shadow-lg">
+                <div class="flex items-center gap-4">
+                    <div class="p-4 bg-gradient-to-br from-yellow-500 to-orange-500 rounded-full text-white shadow-lg">
+                        <i class="fa-solid fa-star text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-lg text-gray-800 dark:text-gray-200">Favorite Contacts</h3>
+                        <p class="text-3xl font-bold text-yellow-600 dark:text-yellow-400">25</p>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">Top connections</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-effect rounded-xl p-6 card-hover border shadow-lg">
+                <div class="flex items-center gap-4">
+                    <div class="p-4 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full text-white shadow-lg">
+                        <i class="fa-solid fa-calendar-days text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-lg text-gray-800 dark:text-gray-200">Member Since</h3>
+                        <p class="text-xl font-bold text-blue-600 dark:text-blue-400">Jan 2023</p>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">2+ years active</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Additional Features Section -->
+        <div class="mt-8 glass-effect rounded-xl p-6 border shadow-lg animate-slide-up" style="animation-delay: 0.4s;">
+            <h3 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4 flex items-center gap-3">
+                <i class="fa-solid fa-chart-line text-purple-500"></i>
+                Account Activity
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div class="text-center p-4 rounded-lg bg-white/30 dark:bg-gray-800/30">
+                    <i class="fa-solid fa-eye text-blue-500 text-2xl mb-2"></i>
+                    <p class="font-semibold text-gray-800 dark:text-gray-200">Profile Views</p>
+                    <p class="text-xl font-bold text-blue-600 dark:text-blue-400">1,234</p>
+                </div>
+                <div class="text-center p-4 rounded-lg bg-white/30 dark:bg-gray-800/30">
+                    <i class="fa-solid fa-message text-green-500 text-2xl mb-2"></i>
+                    <p class="font-semibold text-gray-800 dark:text-gray-200">Messages Sent</p>
+                    <p class="text-xl font-bold text-green-600 dark:text-green-400">856</p>
+                </div>
+                <div class="text-center p-4 rounded-lg bg-white/30 dark:bg-gray-800/30">
+                    <i class="fa-solid fa-handshake text-purple-500 text-2xl mb-2"></i>
+                    <p class="font-semibold text-gray-800 dark:text-gray-200">Connections Made</p>
+                    <p class="text-xl font-bold text-purple-600 dark:text-purple-400">42</p>
+                </div>
+                <div class="text-center p-4 rounded-lg bg-white/30 dark:bg-gray-800/30">
+                    <i class="fa-solid fa-trophy text-yellow-500 text-2xl mb-2"></i>
+                    <p class="font-semibold text-gray-800 dark:text-gray-200">Achievements</p>
+                    <p class="text-xl font-bold text-yellow-600 dark:text-yellow-400">8</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+</body>
+</html>
+
+
+<!-- =============================================================================================================================== -->
+
+<!DOCTYPE html>
+<html lang="en" th:replace="~{base :: parent(~{::#content},~{::title},~{})}">
+<head>
+    <title>Profile</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+</head>
+
+<body>
+<div id="content" class="flex flex-col p-6 bg-gray-50 sm:ml-64">
+
+    <!-- Sidebar -->
+    <div th:replace="~{User/sidebar :: sidebar}"></div>
+
+    <!-- Main Content -->
+    <div class="flex-1 p-6">
+
+        <!-- Header -->
+        <div class="flex items-center justify-between mb-6">
+            <h1 class="text-3xl font-bold text-gray-700 flex items-center gap-3">
+                <i class="fa-solid fa-users text-blue-600"></i> Profile
+            </h1>
+        </div>
+
+        <!-- Profile Card -->
+        <div class="bg-white shadow-lg rounded-xl p-6 flex flex-col md:flex-row gap-6 items-center mb-6">
+            
+            <!-- Profile Image -->
+            <img th:src="${loggedInUser?.profilePic != null && loggedInUser.profilePic != '' ? loggedInUser.profilePic : '/css/default-user.jpeg'}"
+                 alt="Profile Image"
+                 class="w-32 h-32 rounded-full border-2 border-gray-300 object-cover"/>
+
+            <!-- Basic Info -->
+            <div class="flex-1 flex flex-col gap-3">
+                <h2 class="text-2xl font-bold uppercase text-green-700" th:text="${loggedInUser?.name ?: 'Guest'}">Name</h2>
+                
+                <div class="flex items-center gap-3 text-gray-600 text-lg">
+                    <i class="fa-solid fa-envelope"></i>
+                    <span th:text="${loggedInUser?.email ?: 'Not logged in'}">email@example.com</span>
+                </div>
+
+                <div class="flex items-center gap-3 text-gray-600 text-lg">
+                    <i class="fa-solid fa-phone"></i>
+                    <span th:text="${loggedInUser?.phoneNumber ?: 'No number found'}">+91 9876543210</span>
+                </div>
+
+                <div class="flex items-center gap-3 text-gray-600 text-lg">
+                    <i class="fa-solid fa-info"></i>
+                    <span th:text="${loggedInUser?.about ?: 'N/A'}">About info</span>
+                </div>
+
+                <div class="flex items-center gap-3 text-gray-600 text-lg">
+                    <i class="fa-solid fa-globe"></i>
+                    <span th:text="${loggedInUser?.provider ?: 'SELF'}">Provider</span>
+                </div>
+
+                <!-- Actions -->
+                <div class="flex gap-4 mt-4">
+                    <a th:href="@{/user/profile/edit}" 
+                       class="px-4 py-2 bg-green-600 text-white rounded-full hover:bg-green-700 flex items-center gap-2">
+                        <i class="fa-solid fa-file-pen"></i> Edit Profile
+                    </a>
+                    <a th:href="@{/user/profile/change-password}" 
+                       class="px-4 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 flex items-center gap-2">
+                        <i class="fa-solid fa-key"></i> Change Password
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Optional: Extra Stats / Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+
+            <div class="bg-white shadow rounded-lg p-4 flex items-center gap-3">
+                <i class="fa-solid fa-user text-green-500 text-xl"></i>
+                <div>
+                    <h3 class="font-semibold text-gray-700">Total Contacts</h3>
+                    <p class="text-gray-600" th:text="${totalContacts}">0</p>
+                </div>
+            </div>
+
+            <div class="bg-white shadow rounded-lg p-4 flex items-center gap-3">
+                <i class="fa-solid fa-star text-yellow-500 text-xl"></i>
+                <div>
+                    <h3 class="font-semibold text-gray-700">Favorite Contacts</h3>
+                    <p class="text-gray-600" th:text="${favoriteContacts}">0</p>
+                </div>
+            </div>
+
+            <div class="bg-white shadow rounded-lg p-4 flex items-center gap-3">
+                <i class="fa-solid fa-calendar-days text-blue-500 text-xl"></i>
+                <div>
+                    <h3 class="font-semibold text-gray-700">Member Since</h3>
+                    <p class="text-gray-600" th:text="${#dates.format(loggedInUser?.createdAt, 'dd MMM yyyy')}">N/A</p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+</body>
+</html>
+
+<!-- =============================================================== -->
+
+package com.pronexa.connect.config;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+
+import com.pronexa.connect.helpers.Message;
+import com.pronexa.connect.helpers.MessageType;
+import com.pronexa.connect.services.impl.SecurityCustomUserDetailService;
+
+import jakarta.servlet.http.HttpSession;
+
+@Configuration
+public class SecurityConfig {
+
+    @Autowired
+    private AuthFailtureHandler authFailtureHandler;
+
+    @Autowired
+    private OAuthAuthenticationSuccessHandler handler;
+
+    @Autowired
+    private SecurityCustomUserDetailService userDetailsService;
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    
+    // This exposes the AuthenticationManager as a Spring bean
+    // AuthenticationManager is responsible for processing authentication requests
+    // It uses the configured UserDetailsService and PasswordEncoder automatically
+    // By defining this bean, we can inject AuthenticationManager elsewhere in the application
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
+    }
+
+    @Bean
+public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+
+    // Configure which URLs are public and which require authentication
+    httpSecurity.authorizeHttpRequests(authorize -> authorize
+        // Public URLs
+        .requestMatchers("/home", "/register", "/services").permitAll()
+        // URLs requiring authentication
+        .requestMatchers("/user/**").authenticated()
+        // Any other requests are allowed
+        .anyRequest().permitAll()
+    );
+
+    // Configure form-based login
+    httpSecurity.formLogin(formLogin -> formLogin
+        .loginPage("/login")                        // Custom login page
+        .loginProcessingUrl("/authenticate")        // URL to submit credentials
+        .defaultSuccessUrl("/user/profile", true)// On successful login, redirect here
+        // .failureForwardUrl("/login?error=true")  // Alternative failure URL (optional)
+        // .defaultSuccessUrl("/home")              // Alternative success URL (optional)
+        .usernameParameter("email")                 // Form username parameter
+        .passwordParameter("password")             // Form password parameter
+        .failureHandler(authFailtureHandler)       // Custom failure handler
+    );
+
+    
+
+    // Configure logout
+    httpSecurity.logout(logout -> logout
+        .logoutUrl("/logout")                   // Custom logout URL
+        .logoutSuccessUrl("/login?logout=true")    // Redirect after successful logout
+    );
+
+
+    // This tells Spring Security that you want to use OAuth2 for login.
+    // Specifies that the login page is at (/login). Users are redirected here to start the OAuth process.
+      // Set the custom success handler that defines what to do after login is successful
+    httpSecurity.oauth2Login(oauth -> {
+            oauth.loginPage("/login");
+            oauth.successHandler(handler);
+        });
+
+        // Handle DisabledException globally
+    httpSecurity.exceptionHandling(ex -> ex
+            .authenticationEntryPoint((request, response, authException) -> {
+                if (authException instanceof DisabledException) {
+                    HttpSession session = request.getSession(true);
+                    session.setAttribute("message",
+                            Message.builder()
+                                    .content("Your account is disabled. Check your email for verification link!")
+                                    .type(MessageType.red)
+                                    .build());
+                    response.sendRedirect("/login");
+                } else {
+                    response.sendRedirect("/login?error=true");
+                }
+            })
+    );
+
+        // Disable CSRF protection (use only if you are handling it elsewhere or for development)
+    httpSecurity.csrf(AbstractHttpConfigurer::disable);
+
+    return httpSecurity.build();
+}
+
+
+    // ==== In Memory User And password Setup for practice ===
+    /*
+    @Bean
+    public UserDetailsService userDetailsService() {
+        UserDetails user1 = User.builder()
+                .username("admin123")
+                .password(passwordEncoder().encode("admin123"))
+                .roles("ADMIN", "USER")
+                .build();
+
+        UserDetails user2 = User.builder()
+                .username("user123")
+                .password(passwordEncoder().encode("password"))
+                .roles("USER")
+                .build();
+
+        return new InMemoryUserDetailsManager(user1, user2);
+    }
+    */
+}

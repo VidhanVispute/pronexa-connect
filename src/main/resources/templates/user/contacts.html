@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{base :: parent(~{::#content}, ~{::title}, ~{})}">
+
+<head>
+    <title>Dashboard - Contacts</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+</head>
+
+<body>
+    <div id="content" class="flex flex-col p-6 bg-gray-50 sm:ml-64">
+
+        <!-- Sidebar -->
+        <div th:replace="~{User/sidebar :: sidebar}"></div>
+
+        <!-- Controls: Search + Favorites + Add -->
+        <div class="mb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <form th:action="@{/user/contacts}" method="get" class="flex items-center gap-2">
+                <input type="hidden" name="page" value="0" />
+
+                <!-- keyword -->
+                <input type="text" name="keyword" th:value="${keyword}" placeholder="Search..."
+                    class="px-3 py-2 border rounded-full w-64" />
+
+                <!-- search type dropdown -->
+                <select name="searchType" class="px-2 py-2 border rounded-full">
+                    <option value="name" th:selected="${searchType == 'name'}">Name</option>
+                    <option value="email" th:selected="${searchType == 'email'}">Email</option>
+                    <option value="both" th:selected="${searchType == 'both'}">Both</option>
+                </select>
+
+                <!-- buttons -->
+                <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-full">Search</button>
+                <a th:href="@{/user/contacts}" class="px-3 py-2 bg-gray-200 rounded-full ml-4">Clear</a>
+            </form>
+
+
+            <div class="flex items-center gap-2">
+                <a th:if="${favorite == null || !favorite}" th:href="@{/user/contacts(favorite=true)}"
+                    class="px-4 py-2 bg-yellow-500 text-white rounded-full">Show Favorites</a>
+                <a th:if="${favorite != null && favorite}" th:href="@{/user/contacts}"
+                    class="px-4 py-2 bg-gray-400 text-white rounded-full">Show All</a>
+
+                <a th:href="@{/user/contacts/add}" class="px-4 py-2 bg-green-600 text-white rounded-full">+ Add
+                    Contact</a>
+            </div>
+        </div>
+
+        <!-- Contacts Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div th:each="contact : ${contacts}" class="bg-white rounded-lg shadow p-4 flex flex-col">
+                <div class="flex items-center gap-3">
+                    <img th:src="${contact.picture != null && contact.picture != '' ? contact.picture : '/css/default-user.jpeg'}"
+                        alt="Contact Image"
+                        class="w-16 h-16 rounded-full object-cover border-2 border-gray-300 dark:border-gray-300" />
+
+
+                    <div class="flex-1">
+                        <div class="flex items-center justify-between gap-2">
+                            <div>
+                                <h4 style="font-family: 'Michroma', sans-serif; font-weight: 400; font-style: normal; text-transform: capitalize;"
+                        class=" text-green-700" th:text="${contact.name}">Name</h4>
+
+                                <p class="text-sm text-gray-500" th:text="${contact.email}">email@example.com</p>
+                            </div>
+
+                            <div class="text-xl">
+                                <span th:if="${contact.favorite}" class="text-yellow-500">★</span>
+                                <span th:unless="${contact.favorite}" class="text-gray-300">☆</span>
+                            </div>
+                        </div>
+
+                        <p class="mt-2 text-sm text-gray-600">
+                            <i class="fa-solid fa-phone mr-2"></i>
+                            <span th:text="'+91 ' + ${contact.phoneNumber}">+91 9xxxxxxxxx</span>
+                        </p>
+
+                    </div>
+                </div>
+
+                <!-- Links & Actions -->
+                <div class="mt-4 flex items-center justify-between">
+                    <div class="flex items-center gap-3 text-gray-600">
+                        <a th:if="${contact.linkedInLink != null && contact.linkedInLink != ''}"
+                            th:href="${contact.linkedInLink}" target="_blank" class="hover:text-blue-600">
+                            <i class="fa-brands fa-linkedin"></i>
+                        </a>
+                        <a th:if="${contact.websiteLink != null && contact.websiteLink != ''}"
+                            th:href="${contact.websiteLink}" target="_blank" class="hover:text-gray-800">
+                            <i class="fa-solid fa-link"></i>
+                        </a>
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                        <a th:href="@{'/user/contacts/view/' + ${contact.id}}"
+                            class="text-blue-400 hover:text-blue-900">
+                            <i class="fa-solid fa-eye"></i>
+                        </a>
+                        <a th:href="@{'/user/contacts/edit/' + ${contact.id}}"
+                            class="text-green-400 hover:text-green-900">
+                            <i class="fa-solid fa-user-pen"></i>
+                        </a>
+
+                        <!-- DELETE FORM -->
+                        <form th:action="@{/user/contacts/delete/{id}(id=${contact.id})}" method="post"
+                            th:onsubmit="return confirm('Are you sure you want to delete this contact?');">
+                            <input type="hidden" name="_method" value="delete" />
+                            <button type="submit" class="text-red-400 hover:text-red-900">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="mt-6 flex justify-center items-center gap-2">
+            <a th:if="${currentPage > 0}"
+                th:href="@{/user/contacts(page=${currentPage - 1}, keyword=${keyword}, favorite=${favorite})}"
+                class="px-3 py-1 border rounded">Previous</a>
+
+            <span th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+                <a th:href="@{/user/contacts(page=${i}, keyword=${keyword}, favorite=${favorite})}" th:text="${i + 1}"
+                    th:classappend="${i == currentPage} ? 'font-bold text-blue-600' : 'text-gray-600'"
+                    class="px-3 py-1 border rounded hover:bg-gray-100"></a>
+            </span>
+
+            <a th:if="${currentPage < totalPages - 1}"
+                th:href="@{/user/contacts(page=${currentPage + 1}, keyword=${keyword}, favorite=${favorite})}"
+                class="px-3 py-1 border rounded">Next</a>
+        </div>
+
+    </div>
+</body>
+
+</html>

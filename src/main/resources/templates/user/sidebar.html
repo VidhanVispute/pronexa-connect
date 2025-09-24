@@ -1,0 +1,56 @@
+<aside data-th-fragment="sidebar" id="logo-sidebar"
+   class="fixed top-[72px] left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
+   aria-label="Sidebar">
+   <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
+      
+      <ul class="space-y-2 font-medium">
+      
+
+         <li>
+            <a data-th-href="@{/user/dashboard}"
+               class="flex items-center justify-center w-60 px-6 py-3 text-sm text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group michroma-regular">
+               <i class="fa-solid fa-grip"></i>
+               <span class="flex-1 ms-3 whitespace-nowrap">Dashboard</span>
+            </a>
+         </li>
+         <li>
+            <a data-th-href="@{/user/profile}"
+               class="flex items-center justify-center w-60 px-6 py-3 text-sm text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group michroma-regular">
+               <i class="fa-solid fa-address-card"></i>
+               <span class="flex-1 ms-3 whitespace-nowrap">profile</span>
+            </a>
+         </li>
+
+         <li>
+            <a data-th-href="@{/user/contacts/add}"
+               class="flex items-center justify-center w-60 px-6 py-3 text-sm text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group michroma-regular">
+               <i class="fa-solid fa-plus"></i>
+               <span class="flex-1 ms-3 whitespace-nowrap">Add Contacts</span>
+            </a>
+         </li>
+
+         <li>
+            <a data-th-href="@{/user/contacts}"
+               class="flex items-center justify-center w-60 px-6 py-3 text-sm text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group michroma-regular">
+               <i class="fa-solid fa-address-book"></i>
+               <span class="flex-1 ms-3 whitespace-nowrap">Contacts</span>
+            </a>
+         </li>
+
+         <li>
+            <a href="#"
+               class="flex items-center justify-center w-60 px-6 py-3 text-sm text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group michroma-regular">
+               <i class="fa-solid fa-message"></i>
+               <span class="flex-1 ms-3 whitespace-nowrap">Direct Message</span>
+            </a>
+         </li>
+         <li>
+            <a href="#"
+               class="flex items-center justify-center w-60 px-6 py-3 text-sm text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group michroma-regular">
+               <i class="fa-solid fa-comment"></i>
+               <span class="flex-1 ms-3 whitespace-nowrap">Feedback</span>
+            </a>
+         </li>
+      </ul>
+   </div>
+</aside>

@@ -1,0 +1,29 @@
+
+<!DOCTYPE html>
+<html lang="en" th:replace="~{base :: parent(~{::#content},~{::title},~{})}">
+<head>
+    <title>dashborad</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    
+</head>
+
+<body>
+    <div id="content"  class="ml-64 flex items-center justify-center">
+        <!-- Correct fragment path -->
+        <div th:replace="~{User/sidebar :: sidebar}"></div>
+
+        <div >
+            <h1 class="text-4xl md:text-5xl font-bold mb-6 leading-tight text-black-100 dark:text-black">User Dashboard</h1>
+            <p>Name: <span th:text="${loggedInUser?.name ?: 'Guest'}"></span></p>
+            <p>Email: <span th:text="${loggedInUser?.email ?: 'Not logged in'}"></span></p>
+            <p>Phone: <span th:text="${loggedInUser?.phoneNumber ?: 'No number found'}"></span></p>
+            <p>About: <span th:text="${loggedInUser?.about ?: 'N/A'}"></span></p>
+            <p>Provider: <span th:text="${loggedInUser?.provider ?: 'SELF'}"></span></p>
+           <img th:src="${loggedInUser?.profilePic ?: '/css/default-user.jpeg'}" alt="Profile Picture" class="w-32 h-32 rounded-full border" />
+
+        </div>
+    </div>
+</body>
+</html>

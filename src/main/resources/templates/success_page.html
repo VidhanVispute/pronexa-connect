@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Email Verified</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="container">
+        <h2>Email Verified Successfully!</h2>
+        <p>You can now <a th:href="@{/login}">login</a> to your account.</p>
+        <div th:if="${session.message != null}">
+            <p th:text="${session.message.content}" 
+               th:classappend="${session.message.type == 'green'} ? 'text-green' : 'text-red'"></p>
+        </div>
+    </div>
+</body>
+</html>

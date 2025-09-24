@@ -1,0 +1,86 @@
+<nav data-th-fragment="navbar" class="fixed top-0 left-0 w-full z-50 backdrop-blur-md bg-white/80 dark:bg-gray-900/80 border-b border-gray-200 dark:border-gray-700 shadow-md transition-all duration-300">
+  <div class="max-w-screen-xl mx-auto flex flex-wrap items-center justify-between p-4">
+
+    
+    <!-- Logo -->
+    <a class="flex items-center space-x-3 rtl:space-x-reverse hover:scale-105 transition-transform duration-300">
+      <img th:src="@{/css/logo.png}" class="h-12 w-12 rounded-full shadow-md" alt="PronexaConnect Logo" />
+      <span class="self-center text-3xl font-bold text-gray-900 dark:text-white" style="font-family: 'Emblema One', cursive;">
+        Pronexa<span class="text-blue-500">Connect</span>
+      </span>
+    </a>
+
+    <!-- Actions: Login, Signup, Dark Mode -->
+    <div class="flex items-center gap-2 md:order-2">
+       <a th:href="@{/login}" 
+         class="px-5 py-2 text-white bg-blue-700 rounded-full font-medium text-sm shadow-lg hover:bg-blue-800 transform transition-transform duration-300 hover:-translate-y-1">
+        Login
+      </a>
+
+      <a th:href="@{/signup}" 
+         class="px-5 py-2 text-white bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full font-medium text-sm shadow-lg hover:scale-105 transition-transform duration-300">
+        Signup
+      </a>
+
+       <!-- Dark Mode Toggle -->
+      <button id="darkModeToggle" class="relative w-14 h-8 flex items-center bg-gray-300 dark:bg-gray-900 rounded-full p-1 shadow-md transition-all duration-500 focus:outline-none">
+        <div class="w-6 h-6 bg-red rounded-full shadow-md transform transition-transform duration-500"></div>
+        <span class="absolute left-2 text-yellow-400 sun-icon">☀️</span>
+        <span class="absolute right-2 text-gray-800 moon-icon opacity-0">🌙</span>
+      </button>
+
+      <!-- Mobile Hamburger -->
+      <button data-collapse-toggle="navbar-sticky" type="button" 
+              class="inline-flex items-center p-2 w-10 h-10 justify-center text-gray-500 rounded-lg md:hidden hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-600">
+        <span class="sr-only">Open main menu</span>
+        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Navigation Links -->
+    <div class="hidden w-full md:flex md:order-1 md:w-auto" id="navbar-sticky">
+      <ul class="flex flex-col md:flex-row md:space-x-8 mt-4 md:mt-0 font-medium p-4 md:p-0 bg-gray-50 md:bg-transparent border border-gray-100 md:border-0 rounded-lg dark:bg-gray-800 md:dark:bg-transparent dark:border-gray-700">
+        <li>
+          <a th:href="@{/home}" 
+          class="block py-2 px-3 md:px-0 md:py-0 text-red-700 md:text-red-700 dark:text-red-500 md:dark:text-red-500 hover:text-red-900 md:hover:text-red-700 rounded">
+            Home
+          </a>
+        </li>
+        <li>
+          <a th:href="@{/about}" class="block py-2 px-3 md:px-0 md:py-0 text-gray-900 dark:text-white hover:text-blue-600 md:hover:text-blue-500 transition-colors duration-300 rounded-md">
+            About
+          </a>
+        </li>
+        <li>
+          <a th:href="@{/service}" 
+         class="block py-2 px-3 md:px-0 md:py-0 text-gray-900 dark:text-white hover:text-blue-600 md:hover:text-blue-500 transition-colors duration-300 rounded-md">
+            Services
+          </a>
+        </li>
+        <li>
+          <a th:href="@{/contact}" 
+             class="block py-2 px-3 md:px-0 md:py-0 text-gray-900 dark:text-white hover:text-blue-600 md:hover:text-blue-500 transition-colors duration-300 rounded-md">
+            Contact
+          </a>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</nav>
+
+<!-- Dark Mode Script -->
+<script>
+  const toggle = document.getElementById('darkModeToggle');
+  const html = document.documentElement;
+  const sunIcon = toggle.querySelector('.sun-icon');
+  const moonIcon = toggle.querySelector('.moon-icon');
+
+  toggle.addEventListener('click', () => {
+    html.classList.toggle('dark');
+    sunIcon.classList.toggle('opacity-0');
+    moonIcon.classList.toggle('opacity-100');
+  });
+</script>
